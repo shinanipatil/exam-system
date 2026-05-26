@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Edit Exam - Online Exam System{% endblock %}
+{% block content %}
+<section class="form-card">
+    <h1>Edit Exam</h1>
+    <form method="POST">
+        <div class="form-grid">
+            <div>
+                <label for="title">Exam Title</label>
+                <input id="title" name="title" type="text" value="{{ exam.title }}" required>
+            </div>
+            <div>
+                <label for="duration_minutes">Exam Duration (minutes)</label>
+                <input id="duration_minutes" name="duration_minutes" type="number" min="1" max="300" value="{{ exam.duration_minutes }}" required>
+            </div>
+            <div>
+                <label for="positive_marks">Positive Mark</label>
+                <input id="positive_marks" name="positive_marks" type="number" step="0.01" min="0.01" value="{{ exam.positive_marks }}" required>
+            </div>
+            <div>
+                <label for="negative_marks">Negative Mark</label>
+                <input id="negative_marks" name="negative_marks" type="number" step="0.01" min="0" value="{{ exam.negative_marks }}" required>
+            </div>
+            <div class="full-width">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3">{{ exam.description }}</textarea>
+            </div>
+        </div>
+
+        <h2>Questions</h2>
+        {% for q in questions %}
+        <article class="question-builder-card">
+            <div class="actions-inline">
+                <h3>Question {{ loop.index }}</h3>
+                <button
+                    class="btn btn-danger"
+                    type="submit"
+                    formaction="{{ url_for('delete_question', question_id=q.id) }}"
+                    formmethod="POST"
+                    formnovalidate
+                    onclick="return confirm('Delete this question?')"
+                >
+                    Delete Question
+                </button>
+            </div>
+            <label>Question Text</label>
+            <textarea name="question_text_{{ q.id }}" rows="2" required>{{ q.question_text }}</textarea>
+            <div class="form-grid">
+                <div><label>Option A</label><input name="option_a_{{ q.id }}" value="{{ q.option_a }}" required></div>
+                <div><label>Option B</label><input name="option_b_{{ q.id }}" value="{{ q.option_b }}" required></div>
+                <div><label>Option C</label><input name="option_c_{{ q.id }}" value="{{ q.option_c }}" required></div>
+                <div><label>Option D</label><input name="option_d_{{ q.id }}" value="{{ q.option_d }}" required></div>
+            </div>
+            <label>Correct Option</label>
+            <select name="correct_option_{{ q.id }}" required>
+                <option value="A" {% if q.correct_option == 'A' %}selected{% endif %}>A</option>
+                <option value="B" {% if q.correct_option == 'B' %}selected{% endif %}>B</option>
+                <option value="C" {% if q.correct_option == 'C' %}selected{% endif %}>C</option>
+                <option value="D" {% if q.correct_option == 'D' %}selected{% endif %}>D</option>
+            </select>
+        </article>
+        {% endfor %}
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

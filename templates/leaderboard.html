@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard - {{ exam.title }}{% endblock %}
+{% block content %}
+<section class="table-card">
+    <h1>Leaderboard: {{ exam.title }}</h1>
+    {% if rows %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Student</th>
+                    <th>Best Score</th>
+                    <th>Best Correct</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>#{{ loop.index }}</td>
+                    <td>{{ row.student_name }}</td>
+                    <td>{{ row.best_score }}</td>
+                    <td>{{ row.best_correct }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No attempts yet for this exam.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Login - Online Exam System{% endblock %}
+{% block content %}
+<section class="form-card auth-card">
+    <h1>Login</h1>
+    <p class="muted">Admin and students can login from here.</p>
+
+    {% if auth0_enabled %}
+    <a href="{{ url_for('login_google') }}" class="btn btn-google">
+        <span class="google-icon" aria-hidden="true">G</span>
+        Continue with Google
+    </a>
+    <p class="auth-divider"><span>or</span></p>
+    {% endif %}
+
+    <form method="POST">
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Login with username</button>
+        </div>
+    </form>
+    <p class="muted small-text">Default admin: <strong>admin</strong> / <strong>admin123</strong></p>
+    <p class="muted small-text">New student? <a href="{{ url_for('register') }}">Register here</a></p>
+</section>
+{% endblock %}

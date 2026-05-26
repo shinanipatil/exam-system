@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Take Exam - {{ exam.title }}{% endblock %}
+{% block content %}
+<section class="form-card">
+    <h1>{{ exam.title }}</h1>
+    <p class="muted">{{ exam.description or "No description available." }}</p>
+    <div class="marking-chip-row">
+        <span class="chip positive">+{{ exam.positive_marks }} for correct</span>
+        <span class="chip negative">-{{ exam.negative_marks }} for wrong</span>
+        <span class="chip timer">Time: <strong id="timeRemaining" data-minutes="{{ exam.duration_minutes }}">{{ exam.duration_minutes }}:00</strong></span>
+    </div>
+
+    <form method="POST" id="examForm">
+        <input type="hidden" name="question_order" value="{{ order_string }}">
+
+        {% for question in questions %}
+        <article class="question-card">
+            <h3>Q{{ loop.index }}. {{ question.question_text }}</h3>
+            <div class="options">
+                <label><input type="radio" name="answer_{{ question.id }}" value="A"> {{ question.option_a }}</label>
+                <label><input type="radio" name="answer_{{ question.id }}" value="B"> {{ question.option_b }}</label>
+                <label><input type="radio" name="answer_{{ question.id }}" value="C"> {{ question.option_c }}</label>
+                <label><input type="radio" name="answer_{{ question.id }}" value="D"> {{ question.option_d }}</label>
+            </div>
+        </article>
+        {% endfor %}
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Submit Exam</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

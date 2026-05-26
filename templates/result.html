@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Result - {{ attempt.exam_title }}{% endblock %}
+{% block content %}
+<section class="result-card">
+    <h1>Exam Result</h1>
+    <p class="muted"><strong>Exam:</strong> {{ attempt.exam_title }}</p>
+    <p class="muted"><strong>Student:</strong> {{ attempt.student_name }}</p>
+
+    <div class="score-box">
+        <h2>{{ attempt.score }} / {{ max_score }}</h2>
+        <p>Your final score</p>
+    </div>
+
+    <div class="stats-grid">
+        <div>
+            <h3>{{ attempt.correct_count }}</h3>
+            <p>Correct Answers</p>
+        </div>
+        <div>
+            <h3>{{ attempt.wrong_count }}</h3>
+            <p>Wrong Answers</p>
+        </div>
+        <div>
+            <h3>{{ attempt.total_questions }}</h3>
+            <p>Total Questions</p>
+        </div>
+    </div>
+
+    <div class="marking-chip-row">
+        <span class="chip positive">+{{ attempt.positive_marks }} each correct</span>
+        <span class="chip negative">-{{ attempt.negative_marks }} each wrong</span>
+    </div>
+
+    <div class="actions">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">Back to Home</a>
+    </div>
+</section>
+{% endblock %}

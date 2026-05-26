@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Home - Online Exam System{% endblock %}
+{% block content %}
+<section class="hero-card">
+    <h1>Build, Conduct, and Evaluate MCQ Exams</h1>
+    <p>Create custom exams with positive and negative marking, let students attempt online, and view detailed results instantly.</p>
+    {% if current_user and current_user.role == 'admin' %}
+        <a href="{{ url_for('create_exam') }}" class="btn btn-primary">Create New Exam</a>
+    {% elif current_user and current_user.role == 'student' %}
+        <a href="{{ url_for('results') }}" class="btn btn-primary">View My Results</a>
+    {% else %}
+        <a href="{{ url_for('login') }}" class="btn btn-primary">Login to Continue</a>
+    {% endif %}
+</section>
+
+<section class="section-title-row">
+    <h2>Available Exams</h2>
+</section>
+
+{% if exams %}
+    <div class="card-grid">
+        {% for exam in exams %}
+        <article class="exam-card">
+            <h3>{{ exam.title }}</h3>
+            <p class="muted">{{ exam.description or "No description provided." }}</p>
+            <ul>
+                <li>Questions: {{ exam.question_count }}</li>
+                <li>Positive Mark: +{{ exam.positive_marks }}</li>
+                <li>Negative Mark: -{{ exam.negative_marks }}</li>
+                <li>Duration: {{ exam.duration_minutes }} mins</li>
+            </ul>
+            <div class="actions-inline">
+                {% if current_user and current_user.role == 'student' %}
+                    <a href="{{ url_for('take_exam', exam_id=exam.id) }}" class="btn btn-secondary">Take Exam</a>
+                {% endif %}
+                <a href="{{ url_for('leaderboard', exam_id=exam.id) }}" class="btn btn-light">Leaderboard</a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">
+        <p>No exams available yet. Start by creating one.</p>
+    </div>
+{% endif %}
+{% endblock %}

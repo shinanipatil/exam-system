@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}All Results - Online Exam System{% endblock %}
+{% block content %}
+<section class="table-card">
+    <h1>All Exam Results</h1>
+    {% if current_user and current_user.role == 'admin' %}
+    <div class="actions-inline">
+        <a class="btn btn-secondary" href="{{ url_for('export_results_csv') }}">Export CSV</a>
+        <a class="btn btn-secondary" href="{{ url_for('export_results_pdf') }}">Export PDF</a>
+    </div>
+    {% endif %}
+    {% if attempts %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Exam</th>
+                    <th>Score</th>
+                    <th>Correct</th>
+                    <th>Wrong</th>
+                    <th>Total Questions</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for a in attempts %}
+                <tr>
+                    <td>{{ a.student_name }}</td>
+                    <td>{{ a.exam_title }}</td>
+                    <td>{{ a.score }}</td>
+                    <td>{{ a.correct_count }}</td>
+                    <td>{{ a.wrong_count }}</td>
+                    <td>{{ a.total_questions }}</td>
+                    <td>{{ a.attempted_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No results available yet.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}

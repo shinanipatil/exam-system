@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Student Register - Online Exam System{% endblock %}
+{% block content %}
+<section class="form-card auth-card">
+    <h1>Student Registration</h1>
+    <form method="POST">
+        <label for="full_name">Full Name</label>
+        <input id="full_name" name="full_name" type="text" required>
+
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" required>
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" required>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Create Student Account</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

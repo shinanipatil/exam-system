@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Create Exam - Online Exam System{% endblock %}
+{% block content %}
+<section class="form-card">
+    <h1>Create MCQ Exam</h1>
+    <form method="POST" id="createExamForm">
+        <div class="form-grid">
+            <div>
+                <label for="title">Exam Title</label>
+                <input id="title" name="title" type="text" required>
+            </div>
+            <div>
+                <label for="question_count">Number of Questions</label>
+                <input id="question_count" name="question_count" type="number" min="1" max="50" value="3" required>
+            </div>
+            <div>
+                <label for="positive_marks">Positive Mark per Correct Answer</label>
+                <input id="positive_marks" name="positive_marks" type="number" step="0.01" min="0.01" value="1" required>
+            </div>
+            <div>
+                <label for="negative_marks">Negative Mark per Wrong Answer</label>
+                <input id="negative_marks" name="negative_marks" type="number" step="0.01" min="0" value="0.25" required>
+            </div>
+            <div>
+                <label for="duration_minutes">Exam Duration (minutes)</label>
+                <input id="duration_minutes" name="duration_minutes" type="number" min="1" max="300" value="30" required>
+            </div>
+            <div class="full-width">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="3" placeholder="Write a short exam description..."></textarea>
+            </div>
+        </div>
+
+        <div class="question-toolbar">
+            <h2>Questions</h2>
+            <button type="button" id="buildQuestionsBtn" class="btn btn-secondary">Generate Question Form</button>
+        </div>
+        <div id="questionsContainer" class="question-list"></div>
+
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">Save Exam</button>
+        </div>
+    </form>
+</section>
+{% endblock %}

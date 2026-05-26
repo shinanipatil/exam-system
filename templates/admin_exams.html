@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Manage Exams - Online Exam System{% endblock %}
+{% block content %}
+<section class="table-card">
+    <h1>Manage Exams</h1>
+    {% if exams %}
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Questions</th>
+                    <th>Marks (+/-)</th>
+                    <th>Duration</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exam in exams %}
+                <tr>
+                    <td>{{ exam.title }}</td>
+                    <td>{{ exam.question_count }}</td>
+                    <td>{{ exam.positive_marks }} / {{ exam.negative_marks }}</td>
+                    <td>{{ exam.duration_minutes }} mins</td>
+                    <td class="actions-inline">
+                        <a class="btn btn-secondary" href="{{ url_for('edit_exam', exam_id=exam.id) }}">Edit</a>
+                        <form method="POST" action="{{ url_for('delete_exam', exam_id=exam.id) }}" onsubmit="return confirm('Delete this exam?')">
+                            <button class="btn btn-danger" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+        <p>No exams found.</p>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
